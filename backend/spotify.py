@@ -4,8 +4,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-link = "https://open.spotify.com/playlist/2OFALaBheaMBhD8KBalULN?si=Rj8XF6xaS02iSUXmzS6bnA"
-all_tracks = []
+
 
 
 def get_spotify_access_token(client_id, client_secret):
@@ -29,12 +28,19 @@ def get_spotify_access_token(client_id, client_secret):
 def extract_playlist_id(playlist_url):
     return playlist_url.split("/playlist/")[1].split("?")[0]
 
-def get_items(playlist_id, access_token, market):
+def get_all_tracks(link, market):
+
+    playlist_id = extract_playlist_id(link)
+    client_id = os.getenv('SPOTIPY_CLIENT_ID')
+    client_secret = os.getenv('SPOTIPY_CLIENT_SECRET')
+    access_token = get_spotify_access_token(client_id, client_secret)
+    
     url = url = f"https://api.spotify.com/v1/playlists/{playlist_id}/tracks?market={market}&limit=100"
     headers = {
         "Authorization": f"Bearer {access_token}"
     }
-    # all_tracks = []
+    
+    all_tracks = []
     
     while url:
         response = requests.get(url, headers=headers)
@@ -50,17 +56,7 @@ def get_items(playlist_id, access_token, market):
             })
         url = data.get("next")
         if url == 'null':
-            break        
+            break
+    return all_tracks
 
 
-
-client_id = os.getenv('SPOTIPY_CLIENT_ID')
-client_secret = os.getenv('SPOTIPY_CLIENT_SECRET')
-redirect_uri = 'http://localhost:8888/callback'
-access_token = get_spotify_access_token(client_id, client_secret)
-playlist_id = extract_playlist_id(link)
-
-get_items(playlist_id, access_token, "US")
-
-print(len(all_tracks))
-print(all_tracks[0])
