@@ -1,3 +1,2 @@
-spotipy
 ytmusicapi
 python-dotenv
