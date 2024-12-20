@@ -35,7 +35,7 @@ def get_all_tracks(link, market):
     client_secret = os.getenv('SPOTIPY_CLIENT_SECRET')
     access_token = get_spotify_access_token(client_id, client_secret)
     
-    url = url = f"https://api.spotify.com/v1/playlists/{playlist_id}/tracks?market={market}&limit=100"
+    url = f"https://api.spotify.com/v1/playlists/{playlist_id}/tracks?market={market}&limit=100"
     headers = {
         "Authorization": f"Bearer {access_token}"
     }
@@ -58,5 +58,23 @@ def get_all_tracks(link, market):
         if url == 'null':
             break
     return all_tracks
+
+def get_playlist_name(link):
+    playlist_id = extract_playlist_id(link)
+    client_id = os.getenv('SPOTIPY_CLIENT_ID')
+    client_secret = os.getenv('SPOTIPY_CLIENT_SECRET')
+    access_token = get_spotify_access_token(client_id, client_secret)
+    
+    url = f"https://api.spotify.com/v1/playlists/{playlist_id}"
+    headers = {
+        "Authorization": f"Bearer {access_token}"
+    }
+    
+    response = requests.get(url, headers=headers)
+    data = response.json()
+    return data["name"]
+    
+    
+    
 
 
