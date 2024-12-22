@@ -1,4 +1,6 @@
-browser.json
+*.json
+*.txt
+test.py
 .env
 venv/
 __pycache__/

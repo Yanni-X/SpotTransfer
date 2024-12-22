@@ -1,24 +1,20 @@
-from ytmusicapi import YTMusic
-from spotify import get_all_tracks, get_playlist_name
+from flask import Flask, request
 
-ytmusic = YTMusic("browser.json")
+from ytm import create_ytm_playlist
 
-playlist_link = "https://open.spotify.com/playlist/2SqnCGLB0l57EgNWGvWgTP"
-tracks = get_all_tracks(playlist_link, "IN")
-# print(tracks[0][list(tracks[0].keys())[0]])
+app = Flask(__name__)
 
+@app.route('/create', methods=['POST'])
+def create_playlist():
+    data = request.get_json()
+    playlist_link = data.get('playlist_link')
+    auth_headers = data.get('auth_headers')
+    
+    try:
+        create_ytm_playlist(playlist_link, auth_headers)
+        return {"message": "Playlist created successfully!"}, 200
+    except Exception as e:
+        return {"message": str(e)}, 500
 
-def get_video_ids(tracks):
-    video_ids = []
-    for track in tracks:
-        search_string = f"{track['name']} {track['artists'][0]}"
-        print(search_string)
-        video_id = ytmusic.search(search_string, filter="songs")[0]["videoId"]
-        video_ids.append(video_id)
-    return video_ids
-
-
-name = get_playlist_name(playlist_link)
-video_ids = get_video_ids(tracks)
-
-ytmusic.create_playlist(name, "", "UNLISTED", video_ids)
+if __name__ == '__main__':
+    app.run(port=8080)
