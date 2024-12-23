@@ -8,7 +8,7 @@ import { useState } from "react";
 export default function InputFields() {
     const [authHeaders, setAuthHeaders] = useState("");
 
-    const [setserverOnline, setSetserverOnline] = useState(false);
+    const [serverOnline, setServerOnline] = useState(false);
 
     const { playlistUrl, setPlaylistUrl } = usePlaylist();
     const [isValidUrl, setIsValidUrl] = useState(true);
@@ -70,7 +70,7 @@ export default function InputFields() {
                             <h1 className="text-lg font-semibold w-full">
                                 Test Connection
                             </h1>
-                            {setserverOnline && (
+                            {serverOnline && (
                                 <p className="text-green-500 text-sm">
                                     Connection Successful
                                 </p>
@@ -92,7 +92,7 @@ export default function InputFields() {
                                     );
                                     const data = await res.json();
                                     if (res.ok) {
-                                        setSetserverOnline(true);
+                                        setServerOnline(true);
                                         console.log(data);
                                     }
                                 } catch (error) {
@@ -137,7 +137,8 @@ export default function InputFields() {
                             disabled={
                                 !isValidUrl ||
                                 !authHeaders ||
-                                playlistUrl.trim() === ""
+                                playlistUrl.trim() === "" ||
+                                !serverOnline
                             }
                             className="w-full"
                             onClick={clonePlaylist}
