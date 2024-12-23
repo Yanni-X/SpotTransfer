@@ -146,7 +146,6 @@ export default function InputFields() {
                         <AlertDialog
                             open={dialogOpen}
                             onOpenChange={setdialogOpen}
-                            className="max-h-full max-w-full"
                         >
                             <AlertDialogTrigger asChild>
                                 <Button
