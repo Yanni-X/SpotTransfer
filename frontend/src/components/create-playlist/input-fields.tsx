@@ -18,6 +18,7 @@ export default function InputFields() {
     const [serverOnline, setServerOnline] = useState(false);
     const [isValidUrl, setIsValidUrl] = useState(true);
     const [dialogOpen, setdialogOpen] = useState(false);
+    const [connectionDialogOpen, setConnectionDialogOpen] = useState(false);
 
     const { playlistUrl, setPlaylistUrl } = usePlaylist();
 
@@ -55,6 +56,27 @@ export default function InputFields() {
         }
     }
 
+    async function testConnection() {
+        setConnectionDialogOpen(true);
+        try {
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            });
+            const data = await res.json();
+            if (res.ok) {
+                setServerOnline(true);
+                console.log(data);
+            }
+        } catch (error) {
+            alert("Connection error. Please try again: " + error);
+        } finally {
+            setConnectionDialogOpen(false);
+        }
+    }
+
     return (
         <>
             <div className="w-full flex items-center justify-around">
@@ -86,35 +108,30 @@ export default function InputFields() {
                                 </p>
                             )}
                         </div>
-                        <Button
-                            className="w-full"
-                            onClick={async () => {
-                                try {
-                                    const res = await fetch(
-                                        `${import.meta.env.VITE_API_URL}/`,
-                                        {
-                                            method: "GET",
-                                            headers: {
-                                                "Content-Type":
-                                                    "application/json",
-                                            },
-                                        }
-                                    );
-                                    const data = await res.json();
-                                    if (res.ok) {
-                                        setServerOnline(true);
-                                        console.log(data);
-                                    }
-                                } catch (error) {
-                                    alert(
-                                        "Connection error. Please try again: " +
-                                            error
-                                    );
-                                }
-                            }}
+                        <AlertDialog
+                            open={connectionDialogOpen}
+                            onOpenChange={setConnectionDialogOpen}
                         >
-                            Test Connection
-                        </Button>
+                            <AlertDialogTrigger asChild>
+                                <Button
+                                    className="w-full"
+                                    onClick={testConnection}
+                                >
+                                    Test Connection
+                                </Button>
+                            </AlertDialogTrigger>
+                            <AlertDialogContent>
+                                <AlertDialogHeader>
+                                    <AlertDialogTitle>
+                                        Testing connection...
+                                    </AlertDialogTitle>
+                                    <AlertDialogDescription>
+                                        Please wait till the server comes
+                                        online. This may take upto a minute.
+                                    </AlertDialogDescription>
+                                </AlertDialogHeader>
+                            </AlertDialogContent>
+                        </AlertDialog>
                     </div>
 
                     <div className="flex flex-col gap-3 items-start justify-center">
