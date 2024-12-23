@@ -1,9 +1,19 @@
 from flask import Flask, request
 from flask_cors import CORS
 from ytm import create_ytm_playlist
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, resources={
+    r"/*" : {
+        "origins": [os.getenv('FRONTEND_URL')],
+        "methods" : ["POST"],
+        "allow_headers": ["Content-Type"]
+    }
+})
 
 
 @app.route('/create', methods=['POST'])
