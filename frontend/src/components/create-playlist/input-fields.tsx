@@ -28,8 +28,6 @@ export default function InputFields() {
             auth_headers: authHeaders,
         };
 
-        // console.log(`Sending data to ${import.meta.env.VITE_API_URL}/`);
-
         const res = await fetch(`${import.meta.env.VITE_API_URL}/create`, {
             method: "POST",
             headers: {
