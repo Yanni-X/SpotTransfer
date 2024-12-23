@@ -28,10 +28,9 @@ def create_playlist():
     except Exception as e:
         return {"message": str(e)}, 500
     
-@app.route('/', methods=['POST'])
+@app.route('/', methods=['GET'])
 def home():
-    data = request.get_json()
-    print(data.get('playlist_link'))
+    # Render health check endpoint
     return {"message": "Server Online"}, 200
 
 if __name__ == '__main__':
