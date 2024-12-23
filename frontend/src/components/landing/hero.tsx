@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Navbar from "@/nav-bar.tsx";
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
 import { usePlaylist } from "@/context/playlist-context";
 
 export default function Hero() {
@@ -30,8 +30,8 @@ export default function Hero() {
 
                         <p className="text-center text-base sm:text-lg md:text-xl pb-4 transition-colors first:mt-0 bg-gradient-to-r from-black to-zinc-950 text-transparent bg-clip-text">
                             SpotTransfer is a free service that allows you to
-                            transfer your Spotify playlists to YouTube Music
-                            playlists in a few simple steps.
+                            transfer your Spotify playlists to YouTube Music in
+                            a few simple steps.
                         </p>
 
                         <form className="flex flex-col items-center justify-center gap-4 sm:flex-row sm:gap-3 mt-8">
@@ -39,7 +39,6 @@ export default function Hero() {
                                 Paste your Spotify Link here
                             </span>
                             <Input
-                                type="text"
                                 placeholder="open.spotify.com/playlist/. . ."
                                 value={playlistUrl}
                                 onChange={(e) => setPlaylistUrl(e.target.value)}
