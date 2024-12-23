@@ -4,12 +4,12 @@ import multiprocessing
 bind = "0.0.0.0:8080"
 workers = multiprocessing.cpu_count() * 2 + 1
 worker_class = 'sync'
-# timeout = unlimited
+timeout = 500
 
 # Worker settings
 max_requests = 1000
 max_requests_jitter = 50
-# keepalive = unlimited 
+keepalive = 500 
 
 # Logging
 accesslog = '-'
