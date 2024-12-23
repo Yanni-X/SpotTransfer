@@ -8,6 +8,8 @@ import { useState } from "react";
 export default function InputFields() {
     const [authHeaders, setAuthHeaders] = useState("");
 
+    const [setserverOnline, setSetserverOnline] = useState(false);
+
     const { playlistUrl, setPlaylistUrl } = usePlaylist();
     const [isValidUrl, setIsValidUrl] = useState(true);
 
@@ -61,43 +63,88 @@ export default function InputFields() {
                         className="w-[40vw] h-[50vh]"
                     />
                 </div>
-                <div className="flex flex-col gap-3 items-start justify-center">
-                    <div className="space-y-1">
-                        <h1 className="text-lg font-semibold">
-                            Paste Spotify playlist URL here
-                        </h1>
-                        <div className="flex items-center gap-2">
-                            <FaExclamationCircle />
-                            <p className="text-sm text-gray-500">
-                                Make sure the playlist is public
-                            </p>
+
+                <div className="flex flex-col gap-12 items-start justify-center">
+                    <div className="flex flex-col w-full gap-3 items-center justify-center">
+                        <div className="space-y-1 w-full">
+                            <h1 className="text-lg font-semibold w-full">
+                                Test Connection
+                            </h1>
+                            {setserverOnline && (
+                                <p className="text-green-500 text-sm">
+                                    Connection Successful
+                                </p>
+                            )}
                         </div>
+                        <Button
+                            className="w-full"
+                            onClick={async () => {
+                                try {
+                                    const res = await fetch(
+                                        `${import.meta.env.VITE_API_URL}/`,
+                                        {
+                                            method: "GET",
+                                            headers: {
+                                                "Content-Type":
+                                                    "application/json",
+                                            },
+                                        }
+                                    );
+                                    const data = await res.json();
+                                    if (res.ok) {
+                                        setSetserverOnline(true);
+                                        console.log(data);
+                                    }
+                                } catch (error) {
+                                    alert(
+                                        "Connection error. Please try again: " +
+                                            error
+                                    );
+                                }
+                            }}
+                        >
+                            Test Connection
+                        </Button>
                     </div>
-                    <Input
-                        placeholder="Paste your playlist URL here"
-                        value={playlistUrl}
-                        onChange={handleUrlChange}
-                        id="playlist-name"
-                        className={`w-full ${
-                            !isValidUrl ? "border-red-500" : ""
-                        }`}
-                    />
-                    {!isValidUrl && (
-                        <p className="text-red-500 text-sm">
-                            Please enter a valid Spotify playlist URL
-                        </p>
-                    )}
-                    <Button
-                        disabled={
-                            !isValidUrl ||
-                            !authHeaders ||
-                            playlistUrl.trim() === ""
-                        }
-                        className="w-full"
-                        onClick={clonePlaylist}
-                    >
-                        Clone Playlist
-                    </Button>
+
+                    <div className="flex flex-col gap-3 items-start justify-center">
+                        <div className="space-y-1">
+                            <h1 className="text-lg font-semibold">
+                                Paste Spotify playlist URL here
+                            </h1>
+                            <div className="flex items-center gap-2">
+                                <FaExclamationCircle />
+                                <p className="text-sm text-gray-500">
+                                    Make sure the playlist is public
+                                </p>
+                            </div>
+                        </div>
+                        <Input
+                            placeholder="Paste your playlist URL here"
+                            value={playlistUrl}
+                            onChange={handleUrlChange}
+                            id="playlist-name"
+                            className={`w-full ${
+                                !isValidUrl ? "border-red-500" : ""
+                            }`}
+                        />
+                        {!isValidUrl && (
+                            <p className="text-red-500 text-sm">
+                                Please enter a valid Spotify playlist URL
+                            </p>
+                        )}
+                        <Button
+                            disabled={
+                                !isValidUrl ||
+                                !authHeaders ||
+                                playlistUrl.trim() === ""
+                            }
+                            className="w-full"
+                            onClick={clonePlaylist}
+                        >
+                            Clone Playlist
+                        </Button>
+                    </div>
                 </div>
             </div>
         </>

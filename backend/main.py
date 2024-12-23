@@ -10,8 +10,8 @@ app = Flask(__name__)
 CORS(app, resources={
     r"/*" : {
         "origins": [os.getenv('FRONTEND_URL')],
-        "methods" : ["POST"],
-        "allow_headers": ["Content-Type"]
+        "methods" : ["POST", "GET"],
+        
     }
 })
 
