@@ -4,14 +4,22 @@ import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
 import { FaExclamationCircle } from "react-icons/fa";
 import { useState } from "react";
+import {
+    AlertDialog,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogHeader,
+    AlertDialogTitle,
+    AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
 export default function InputFields() {
     const [authHeaders, setAuthHeaders] = useState("");
-
     const [serverOnline, setServerOnline] = useState(false);
+    const [isValidUrl, setIsValidUrl] = useState(true);
+    const [dialogOpen, setdialogOpen] = useState(false);
 
     const { playlistUrl, setPlaylistUrl } = usePlaylist();
-    const [isValidUrl, setIsValidUrl] = useState(true);
 
     const validateUrl = (url: string) => {
         const pattern = /^(?:https?:\/\/)?open\.spotify\.com\/playlist\/.+/;
@@ -30,6 +38,7 @@ export default function InputFields() {
             auth_headers: authHeaders,
         };
 
+        setdialogOpen(true);
         const res = await fetch(`${import.meta.env.VITE_API_URL}/create`, {
             method: "POST",
             headers: {
@@ -40,6 +49,7 @@ export default function InputFields() {
         const data = await res.json();
         if (res.ok) {
             console.log(data);
+            setdialogOpen(false);
         } else {
             console.error(data);
         }
@@ -133,18 +143,36 @@ export default function InputFields() {
                                 Please enter a valid Spotify playlist URL
                             </p>
                         )}
-                        <Button
-                            disabled={
-                                !isValidUrl ||
-                                !authHeaders ||
-                                playlistUrl.trim() === "" ||
-                                !serverOnline
-                            }
-                            className="w-full"
-                            onClick={clonePlaylist}
+                        <AlertDialog
+                            open={dialogOpen}
+                            onOpenChange={setdialogOpen}
+                            className="max-h-full max-w-full"
                         >
-                            Clone Playlist
-                        </Button>
+                            <AlertDialogTrigger asChild>
+                                <Button
+                                    disabled={
+                                        !isValidUrl ||
+                                        !authHeaders ||
+                                        playlistUrl.trim() === "" ||
+                                        !serverOnline
+                                    }
+                                    className="w-full"
+                                    onClick={clonePlaylist}
+                                >
+                                    Clone Playlist
+                                </Button>
+                            </AlertDialogTrigger>
+                            <AlertDialogContent>
+                                <AlertDialogHeader>
+                                    <AlertDialogTitle>
+                                        Fetching playlist...
+                                    </AlertDialogTitle>
+                                    <AlertDialogDescription>
+                                        This may take a few minutes
+                                    </AlertDialogDescription>
+                                </AlertDialogHeader>
+                            </AlertDialogContent>
+                        </AlertDialog>
                     </div>
                 </div>
             </div>
