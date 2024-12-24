@@ -31,7 +31,7 @@ export default function HowToUse() {
 
     return (
         <div className="flex justify-center items-center">
-            <div className="flex flex-col md:flex-row justify-center items-center gap-4 mb-10 w-[1000px]">
+            <div className="flex flex-col md:flex-row justify-center items-center gap-4 mb-10 w-full max-w-[1000px]">
                 {steps.map((step, index) => (
                     <Card key={index} className="w-full max-w-sm h-48">
                         <CardContent className="flex flex-col mt-10 p-6 text-center h-full">
