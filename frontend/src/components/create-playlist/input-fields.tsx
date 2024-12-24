@@ -11,7 +11,11 @@ import {
     AlertDialogHeader,
     AlertDialogTitle,
     AlertDialogTrigger,
+    AlertDialogFooter,
+    AlertDialogAction,
 } from "@/components/ui/alert-dialog";
+import { FaGithub } from "react-icons/fa";
+import { CheckIcon } from "@/components/ui/check.tsx";
 
 export default function InputFields() {
     const [authHeaders, setAuthHeaders] = useState("");
@@ -19,6 +23,7 @@ export default function InputFields() {
     const [isValidUrl, setIsValidUrl] = useState(true);
     const [dialogOpen, setdialogOpen] = useState(false);
     const [connectionDialogOpen, setConnectionDialogOpen] = useState(false);
+    const [starPrompt, setStarPrompt] = useState(false);
 
     const { playlistUrl, setPlaylistUrl } = usePlaylist();
 
@@ -51,6 +56,7 @@ export default function InputFields() {
         if (res.ok) {
             console.log(data);
             setdialogOpen(false);
+            setStarPrompt(!starPrompt);
         } else {
             console.error(data);
         }
@@ -187,6 +193,47 @@ export default function InputFields() {
                                         This may take a few minutes
                                     </AlertDialogDescription>
                                 </AlertDialogHeader>
+                            </AlertDialogContent>
+                        </AlertDialog>
+
+                        <AlertDialog
+                            open={starPrompt}
+                            onOpenChange={setStarPrompt}
+                        >
+                            <AlertDialogContent>
+                                <AlertDialogHeader>
+                                    <AlertDialogTitle>
+                                        <div className="flex items-center">
+                                            <CheckIcon />
+                                            Your Playlist has been cloned!
+                                        </div>
+                                    </AlertDialogTitle>
+                                    <AlertDialogDescription>
+                                        <div className="ml-12 mb-2">
+                                            <p>
+                                                Please consider starring the
+                                                project on GitHub.
+                                            </p>
+                                            <p>It's free and helps me a lot!</p>
+                                        </div>
+                                    </AlertDialogDescription>
+                                </AlertDialogHeader>
+                                <AlertDialogFooter>
+                                    <div className="flex items-center justify-between w-full">
+                                        <Button>
+                                            <a
+                                                className="w-full flex items-center gap-2"
+                                                href="https://github.com/Pushan2005/SpotTransfer"
+                                            >
+                                                ⭐ on GitHub
+                                                <FaGithub className="w-6 h-6" />
+                                            </a>
+                                        </Button>
+                                        <AlertDialogAction>
+                                            Clone Another Playlist
+                                        </AlertDialogAction>
+                                    </div>
+                                </AlertDialogFooter>
                             </AlertDialogContent>
                         </AlertDialog>
                     </div>
