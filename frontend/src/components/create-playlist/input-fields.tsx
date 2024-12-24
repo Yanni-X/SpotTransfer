@@ -106,7 +106,7 @@ export default function InputFields() {
                     <div className="flex flex-col w-full gap-3 items-center justify-center">
                         <div className="space-y-1 w-full">
                             <h1 className="text-lg font-semibold w-full">
-                                Test Connection
+                                You need to be connected to the server
                             </h1>
                             {serverOnline && (
                                 <p className="text-green-500 text-sm">
@@ -123,13 +123,13 @@ export default function InputFields() {
                                     className="w-full"
                                     onClick={testConnection}
                                 >
-                                    Test Connection
+                                    Connect
                                 </Button>
                             </AlertDialogTrigger>
                             <AlertDialogContent>
                                 <AlertDialogHeader>
                                     <AlertDialogTitle>
-                                        Testing connection...
+                                        Requesting connection...
                                     </AlertDialogTitle>
                                     <AlertDialogDescription>
                                         Please wait till the server comes
