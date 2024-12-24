@@ -8,7 +8,7 @@ export default function Navbar() {
                 to="/"
                 className="text-lg font-medium text-black hover:text-zinc-700"
             >
-                <span className="bg-gradient-to-r from-black via-zinc-800 to-zinc-700 text-transparent bg-clip-text font-bold text-2xl">
+                <span className="bg-gradient-to-r from-white via-zinc-300 to-zinc-400 text-transparent bg-clip-text font-bold text-2xl">
                     SpotTransfer
                 </span>
             </Link>

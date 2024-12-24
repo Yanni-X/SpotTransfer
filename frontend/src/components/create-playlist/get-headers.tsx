@@ -125,7 +125,7 @@ function Step({ title, description, index }: StepProps & { index: number }) {
     return (
         <div className="flex items-start gap-3">
             <div className="flex-shrink-0">
-                <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-zinc-100 text-sm">
+                <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-zinc-100 dark:bg-zinc-800 text-sm">
                     {index + 1}
                 </span>
             </div>

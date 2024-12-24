@@ -17,7 +17,7 @@ export default function Hero() {
                             <a href="https://github.com/Pushan2005/SpotTransfer">
                                 <Button
                                     variant="outline"
-                                    className="dark:bg-black bg-white text-black dark:text-white flex justify-center items-center rounded-full px-6 py-3 text-lg"
+                                    className="dark:bg-gradient-to-r dark:from-gray-900 dark:to-black text-black dark:text-white flex justify-center items-center rounded-full px-6 py-3 text-lg border dark:border-gray-800"
                                 >
                                     Star this on Github ⭐
                                 </Button>
@@ -28,7 +28,7 @@ export default function Hero() {
                             Transfer your Spotify Playlist to YouTube Music
                         </h1>
 
-                        <p className="text-center text-base sm:text-lg md:text-xl pb-4 transition-colors first:mt-0 bg-gradient-to-r from-black to-zinc-950 text-transparent bg-clip-text">
+                        <p className="text-center text-base sm:text-lg md:text-xl pb-4 transition-colors first:mt-0 bg-clip-text text-transparent bg-gradient-to-r from-black to-zinc-950 dark:from-gray-400 dark:to-gray-300">
                             SpotTransfer is a free service that allows you to
                             transfer your Spotify playlists to YouTube Music in
                             a few simple steps.
