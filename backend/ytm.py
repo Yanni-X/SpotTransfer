@@ -7,9 +7,9 @@ def get_video_ids(ytmusic,tracks):
     video_ids = []
     for track in tracks:
         search_string = f"{track['name']} {track['artists'][0]}"
-        print(search_string)
         video_id = ytmusic.search(search_string, filter="songs")[0]["videoId"]
         video_ids.append(video_id)
+    print(f"Found {len(video_ids)} songs on YouTube Music")
     if len(video_ids) == 0:
         raise Exception("No songs found on YouTube Music")
     return video_ids
