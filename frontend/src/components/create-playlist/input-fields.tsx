@@ -20,10 +20,13 @@ import { CheckIcon } from "@/components/ui/check.tsx";
 export default function InputFields() {
     const [authHeaders, setAuthHeaders] = useState("");
     const [serverOnline, setServerOnline] = useState(false);
+
     const [isValidUrl, setIsValidUrl] = useState(true);
     const [dialogOpen, setdialogOpen] = useState(false);
     const [connectionDialogOpen, setConnectionDialogOpen] = useState(false);
     const [starPrompt, setStarPrompt] = useState(false);
+    const [connectionError, setConnectionError] = useState(false);
+    const [errorMessage, setErrorMessage] = useState<React.ReactNode>("");
 
     const { playlistUrl, setPlaylistUrl } = usePlaylist();
 
@@ -64,6 +67,9 @@ export default function InputFields() {
 
     async function testConnection() {
         setConnectionDialogOpen(true);
+        setConnectionError(false);
+        setServerOnline(false);
+
         try {
             const res = await fetch(`${import.meta.env.VITE_API_URL}/`, {
                 method: "GET",
@@ -76,8 +82,21 @@ export default function InputFields() {
                 setServerOnline(true);
                 console.log(data);
             }
-        } catch (error) {
-            alert("Connection error. Please try again: " + error);
+        } catch {
+            setConnectionError(true);
+            setErrorMessage(
+                <>
+                    Unable to connect to server. If this issue persists, please
+                    contact me or{" "}
+                    <a
+                        href="https://github.com/Pushan2005/SpotTransfer/issues/new/choose"
+                        className="text-blue-500 hover:underline"
+                    >
+                        open an issue on GitHub
+                    </a>
+                    .
+                </>
+            );
         } finally {
             setConnectionDialogOpen(false);
         }
@@ -239,6 +258,26 @@ export default function InputFields() {
                     </div>
                 </div>
             </div>
+            <AlertDialog
+                open={connectionError}
+                onOpenChange={setConnectionError}
+            >
+                <AlertDialogContent>
+                    <AlertDialogHeader>
+                        <AlertDialogTitle>Connection Error</AlertDialogTitle>
+                        <AlertDialogDescription>
+                            {errorMessage}
+                        </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                        <AlertDialogAction
+                            onClick={() => setConnectionError(false)}
+                        >
+                            Try Again
+                        </AlertDialogAction>
+                    </AlertDialogFooter>
+                </AlertDialogContent>
+            </AlertDialog>
         </>
     );
 }
