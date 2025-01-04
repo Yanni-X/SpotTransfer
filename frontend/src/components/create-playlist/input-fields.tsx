@@ -27,6 +27,9 @@ export default function InputFields() {
     const [starPrompt, setStarPrompt] = useState(false);
     const [connectionError, setConnectionError] = useState(false);
     const [errorMessage, setErrorMessage] = useState<React.ReactNode>("");
+    const [cloneError, setCloneError] = useState(false);
+    const [cloneErrorMessage, setCloneErrorMessage] =
+        useState<React.ReactNode>("");
 
     const { playlistUrl, setPlaylistUrl } = usePlaylist();
 
@@ -47,21 +50,44 @@ export default function InputFields() {
             auth_headers: authHeaders,
         };
 
-        setdialogOpen(true);
-        const res = await fetch(`${import.meta.env.VITE_API_URL}/create`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(body),
-        });
-        const data = await res.json();
-        if (res.ok) {
-            console.log(data);
+        try {
+            setdialogOpen(true);
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/create`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(body),
+            });
+            const data = await res.json();
+
+            if (res.ok) {
+                setStarPrompt(true);
+            } else if (res.status === 500) {
+                setCloneError(true);
+                setCloneErrorMessage(
+                    <>
+                        Server timeout while cloning playlist. Please try again
+                        or{" "}
+                        <a
+                            href="https://github.com/Pushan2005/SpotTransfer/issues/new/choose"
+                            className="text-blue-500 hover:underline"
+                        >
+                            report this issue
+                        </a>
+                    </>
+                );
+            } else {
+                setCloneError(true);
+                setCloneErrorMessage(
+                    data.message || "Failed to clone playlist"
+                );
+            }
+        } catch {
+            setCloneError(true);
+            setCloneErrorMessage("Network error while cloning playlist");
+        } finally {
             setdialogOpen(false);
-            setStarPrompt(!starPrompt);
-        } else {
-            console.error(data);
         }
     }
 
@@ -287,6 +313,21 @@ export default function InputFields() {
                         <AlertDialogAction
                             onClick={() => setConnectionError(false)}
                         >
+                            Try Again
+                        </AlertDialogAction>
+                    </AlertDialogFooter>
+                </AlertDialogContent>
+            </AlertDialog>
+            <AlertDialog open={cloneError} onOpenChange={setCloneError}>
+                <AlertDialogContent>
+                    <AlertDialogHeader>
+                        <AlertDialogTitle>Clone Error</AlertDialogTitle>
+                        <AlertDialogDescription>
+                            {cloneErrorMessage}
+                        </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                        <AlertDialogAction onClick={() => setCloneError(false)}>
                             Try Again
                         </AlertDialogAction>
                     </AlertDialogFooter>
