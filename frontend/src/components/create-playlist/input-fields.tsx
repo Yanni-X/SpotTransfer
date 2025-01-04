@@ -81,6 +81,21 @@ export default function InputFields() {
             if (res.ok) {
                 setServerOnline(true);
                 console.log(data);
+            } else if (res.status === 500) {
+                setConnectionError(true);
+                setErrorMessage(
+                    <>
+                        Server Error (500). The server likely hit a timeout.
+                        Please try again later or{" "}
+                        <a
+                            href="https://github.com/Pushan2005/SpotTransfer/issues/new/choose"
+                            className="text-blue-500 hover:underline"
+                        >
+                            report this issue on GitHub
+                        </a>
+                        .
+                    </>
+                );
             }
         } catch {
             setConnectionError(true);
@@ -94,7 +109,6 @@ export default function InputFields() {
                     >
                         open an issue on GitHub
                     </a>
-                    .
                 </>
             );
         } finally {
