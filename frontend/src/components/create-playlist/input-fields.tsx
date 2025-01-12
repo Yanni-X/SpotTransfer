@@ -30,6 +30,14 @@ export default function InputFields() {
     const [cloneError, setCloneError] = useState(false);
     const [cloneErrorMessage, setCloneErrorMessage] =
         useState<React.ReactNode>("");
+    const [missedTracksDialog, setMissedTracksDialog] = useState(false);
+    const [missedTracks, setMissedTracks] = useState<{
+        count: number;
+        tracks: string[];
+    }>({
+        count: 0,
+        tracks: [],
+    });
 
     const { playlistUrl, setPlaylistUrl } = usePlaylist();
 
@@ -62,6 +70,10 @@ export default function InputFields() {
             const data = await res.json();
 
             if (res.ok) {
+                if (data.missed_tracks.count > 0) {
+                    setMissedTracks(data.missed_tracks);
+                    setMissedTracksDialog(true);
+                }
                 setStarPrompt(true);
             } else if (res.status === 500) {
                 setCloneError(true);
@@ -329,6 +341,47 @@ export default function InputFields() {
                     <AlertDialogFooter>
                         <AlertDialogAction onClick={() => setCloneError(false)}>
                             Try Again
+                        </AlertDialogAction>
+                    </AlertDialogFooter>
+                </AlertDialogContent>
+            </AlertDialog>
+            <AlertDialog
+                open={missedTracksDialog}
+                onOpenChange={setMissedTracksDialog}
+            >
+                <AlertDialogContent>
+                    <AlertDialogHeader>
+                        <AlertDialogTitle>
+                            Some songs couldn't be found
+                        </AlertDialogTitle>
+                        <AlertDialogDescription>
+                            <div className="mt-2">
+                                <p className="mb-2">
+                                    {missedTracks.count} songs couldn't be found
+                                    on YouTube Music:
+                                </p>
+                                <div className="max-h-[200px] overflow-y-auto">
+                                    <ul className="list-disc list-inside">
+                                        {missedTracks.tracks.map(
+                                            (track, index) => (
+                                                <li
+                                                    key={index}
+                                                    className="text-sm"
+                                                >
+                                                    {track}
+                                                </li>
+                                            )
+                                        )}
+                                    </ul>
+                                </div>
+                            </div>
+                        </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                        <AlertDialogAction
+                            onClick={() => setMissedTracksDialog(false)}
+                        >
+                            Close
                         </AlertDialogAction>
                     </AlertDialogFooter>
                 </AlertDialogContent>

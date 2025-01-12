@@ -23,8 +23,10 @@ def create_playlist():
     auth_headers = data.get('auth_headers')
     
     try:
-        create_ytm_playlist(playlist_link, auth_headers)
-        return {"message": "Playlist created successfully!"}, 200
+        missed_tracks = create_ytm_playlist(playlist_link, auth_headers)
+        return {"message": "Playlist created successfully!",
+                "missed_tracks": missed_tracks
+        }, 200
     except Exception as e:
         return {"message": str(e)}, 500
     
