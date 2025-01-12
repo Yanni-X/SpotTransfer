@@ -22,5 +22,5 @@ def create_ytm_playlist(playlist_link, headers):
     name = get_playlist_name(playlist_link)
     video_ids = get_video_ids(ytmusic, tracks)
     
-    ytmusic.create_playlist(name, "", "UNLISTED", video_ids)
+    ytmusic.create_playlist(name, "", "PRIVATE", video_ids)
 
