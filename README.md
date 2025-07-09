@@ -1,10 +1,14 @@
 # SpotTransfer
 
-## Overview
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue)](LICENSE)  
+[![Release](https://img.shields.io/github/v/release/Pushan2005/SpotTransfer)](https://github.com/Pushan2005/SpotTransfer/releases)  
+[![Stars](https://img.shields.io/github/stars/Pushan2005/SpotTransfer?style=social)](https://github.com/Pushan2005/SpotTransfer/stargazers)
 
-A tool to transfer Spotify playlists to YouTube Music.
+## 🚀 Overview
 
-## Star History
+SpotTransfer lets you instantly migrate any Spotify playlist to YouTube Music—no manual copy-pasting needed.
+
+## ✨ Star History
 
 <a href="https://www.star-history.com/#Pushan2005/SpotTransfer&Date">
  <picture>
@@ -14,32 +18,55 @@ A tool to transfer Spotify playlists to YouTube Music.
  </picture>
 </a>
 
-## Usage
+## 🎯 Quick Start
 
-Follow the instructions at https://spot-transfer.vercel.app
+Prerequisites:
 
-### Self Host
+-   Python 3.8+
+-   Node.js 14+ (or pnpm)
+-   Spotify Developer account (client ID & secret)
 
-1. Clone the repository
-2. Navigate to the `backend` directory in the terminal
+Clone and install both backend and frontend:
+
+```bash
+git clone https://github.com/Pushan2005/SpotTransfer.git
+cd SpotTransfer
+```
+
+### Backend Setup
+
+1. Navigate to the `backend` directory:
     ```bash
     cd backend/
     ```
-3. Install the dependencies:
+2. Install the Python dependencies:
     ```bash
     pip install -r requirements.txt
     ```
-4. Create an `.env` file in the `backend` directory and add the following: (you can get the client id and secret from the [Spotify Developer Dashboard](https://developer.spotify.com/dashboard/))
+3. Create an `.env` file and add your Spotify credentials (get these from the [Spotify Developer Dashboard](https://developer.spotify.com/dashboard/)):
     ```env
-    SPOTIPY_CLIENT_ID=your_spotify_client_id
-    SPOTIPY_CLIENT_SECRET=your_spotify_client_secret
+    SPOTIPY_CLIENT_ID=<your_spotify_client_id>
+    SPOTIPY_CLIENT_SECRET=<your_spotify_client_secret>
     FRONTEND_URL=http://localhost:5173
     ```
-5. Create an `.env` file in the `frontend` directory and add the following:
+4. Start the Flask server:
+    ```bash
+    python3 main.py
+    ```
+
+### Frontend Setup
+
+1. In the `frontend` directory, create an `.env` file with the following content:
     ```env
     VITE_API_URL=http://localhost:8080
     ```
-6. Navigate to the `frontend` directory in the terminal and run the following to install dependencies:
+2. Install the frontend dependencies:
     ```bash
     npm install
     ```
+3. Build and start the frontend app:
+    ```bash
+    npm run build
+    npm run start
+    ```
+4. Open your browser and go to `http://localhost:5173`.
