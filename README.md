@@ -1,9 +1,5 @@
 # SpotTransfer
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue)](LICENSE)  
-[![Release](https://img.shields.io/github/v/release/Pushan2005/SpotTransfer)](https://github.com/Pushan2005/SpotTransfer/releases)  
-[![Stars](https://img.shields.io/github/stars/Pushan2005/SpotTransfer?style=social)](https://github.com/Pushan2005/SpotTransfer/stargazers)
-
 ## 🚀 Overview
 
 SpotTransfer lets you instantly migrate any Spotify playlist to YouTube Music—no manual copy-pasting needed.
