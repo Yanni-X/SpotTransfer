@@ -12,15 +12,23 @@ export default function Navbar() {
                     SpotTransfer
                 </span>
             </Link>
-            <a
-                href="https://github.com/Pushan2005/SpotTransfer"
-                className="text-black dark:text-white hover:text-zinc-700 flex items-center"
-            >
-                <FaGithub className="w-6 h-6 sm:mr-2" />
-                <span className="hidden sm:inline text-lg font-medium">
-                    GitHub
-                </span>
-            </a>
+            <div className="flex items-center gap-8">
+                <Link
+                    to="/announcements"
+                    className="text-black dark:text-white hover:text-zinc-700 dark:hover:text-zinc-300 text-lg font-medium transition-colors"
+                >
+                    Announcements
+                </Link>
+                <a
+                    href="https://github.com/Pushan2005/SpotTransfer"
+                    className="text-black dark:text-white hover:text-zinc-700 flex items-center"
+                >
+                    <FaGithub className="w-6 h-6 sm:mr-2" />
+                    <span className="hidden sm:inline text-lg font-medium">
+                        GitHub
+                    </span>
+                </a>
+            </div>
         </nav>
     );
 }

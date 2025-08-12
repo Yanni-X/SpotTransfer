@@ -4,6 +4,7 @@ import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
 import { FaExclamationCircle } from "react-icons/fa";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import {
     AlertDialog,
     AlertDialogContent,
@@ -220,6 +221,22 @@ export default function InputFields() {
                                 <FaExclamationCircle />
                                 <p className="text-sm text-gray-500">
                                     Make sure the playlist is public
+                                </p>
+                            </div>
+                            <div className="flex items-center gap-2 mt-2">
+                                <FaExclamationCircle className="text-orange-500" />
+                                <p className="text-sm text-gray-500">
+                                    Timeout issues are common due to server
+                                    limitations.
+                                    <br />
+                                    If you experience them, consider{" "}
+                                    <a
+                                        href="https://github.com/Pushan2005/SpotTransfer/?tab=readme-ov-file#-quick-start"
+                                        className="text-blue-500 hover:underline"
+                                    >
+                                        self-hosting
+                                    </a>{" "}
+                                    for better reliability.
                                 </p>
                             </div>
                         </div>

@@ -7,6 +7,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import "./index.css";
 import App from "./pages/App.tsx";
 import CreatePlaylist from "./pages/create-playlist.tsx";
+import Announcements from "./pages/announcements.tsx";
 
 createRoot(document.getElementById("root")!).render(
     <StrictMode>
@@ -18,6 +19,10 @@ createRoot(document.getElementById("root")!).render(
                         <Route
                             path="/create-playlist"
                             element={<CreatePlaylist />}
+                        />
+                        <Route
+                            path="/announcements"
+                            element={<Announcements />}
                         />
                     </Routes>
                 </BrowserRouter>
