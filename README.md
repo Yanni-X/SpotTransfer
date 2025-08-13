@@ -49,6 +49,7 @@ cd SpotTransfer
     ```bash
     python3 main.py
     ```
+    Sometimes, using `python3` might not work depending on how python is configured on your system. Running `py main.py` usually works in such situations.
 
 ### Frontend Setup
 
@@ -60,9 +61,9 @@ cd SpotTransfer
     ```bash
     npm install
     ```
-3. Build and start the frontend app:
+3. Run the dev server for the frontend:
     ```bash
-    npm run build
-    npm run start
+    npm run dev
     ```
+    If you wish, you can build the app and serve it as well but the dev server works just fine for now.
 4. Open your browser and go to `http://localhost:5173`.
